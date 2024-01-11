@@ -1,5 +1,6 @@
 import subprocess
 import re
+import numpy as np
 # Get the command from the user
 '''All Installed software’s list
 Internet Speed
@@ -87,13 +88,14 @@ def getWifiAddress():
     try:
         result = subprocess.run(['ipconfig', '/all'], capture_output=True, text=True, check=True)
         mac_addresses_result = subprocess.run('getmac', capture_output=True, text=True, check=True)
-       
+        mac_addresses_lines = mac_addresses_result.stdout.strip().split('\n')
+        mac_addresses_lines.pop(1)
+        mac_array=np.array(mac_addresses_lines)
         ip_address_match = re.search(r'IPv4 Address[.\s:]+([0-9. ]+)', result.stdout)
-        if ip_address_match and mac_addresses_result is not None:
+        if ip_address_match and mac_addresses_lines is not None:
             ip_address=ip_address_match.group(1)
             print('ip address',ip_address)
-            print('MAc Addresses:')
-            print(mac_addresses_result)
+            print(mac_array)
         else:
             print("Mac address or ip address not found.")
             
