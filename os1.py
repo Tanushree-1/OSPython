@@ -15,7 +15,7 @@ Public IP address
 Windows version
 '''
 
-# Execute the user-specified command
+
 def getScreenResolution():
     result='wmic path WIn32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution'
     runCommand(result)
